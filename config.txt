@@ -1,0 +1,4 @@
+PiezasTotales
+Máquina1,Piezas
+…
+MáquinaN,Piezas
