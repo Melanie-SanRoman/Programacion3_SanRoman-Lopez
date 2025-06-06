@@ -1,14 +1,20 @@
 package tp_especial;
 
 public class Maquina {
+    int id;
     int piezas;
 
-    public Maquina() {
-        this.piezas = 0;
+    public Maquina(int id, int p) {
+        this.id = id;
+        this.piezas = p;
     }
 
-    public Maquina(int p) {
-        this.piezas = p;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getPiezas(){
@@ -18,4 +24,5 @@ public class Maquina {
     public void setPiezas(int p) {
         this.piezas = p;
     }
+
 }
