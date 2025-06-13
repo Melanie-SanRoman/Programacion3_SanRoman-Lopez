@@ -62,14 +62,14 @@ public class Backtracking {
                     return;
                 estado.agregar(m); // agrega la maquina actual e incrementa las piezas
                 solucionActual.addMaquina(m);
-                solucionActual.setPiezasProducidas(estado.piezasCreadas);
+                solucionActual.setPiezasProducidas(m, '+');
                 solucionActual.setPuestasFuncionamiento('+');
 
                 backtracking(estado, solucionActual);
 
                 estado.quitar(m); // quita la ultima maquina y resta las piezas de la ultima maquina
                 solucionActual.deleteMaquina();
-                solucionActual.setPiezasProducidas(estado.piezasCreadas);
+                solucionActual.setPiezasProducidas(m, '-');
                 solucionActual.setPuestasFuncionamiento('-');
             }
         }
