@@ -40,16 +40,21 @@ public class Solucion {
         return piezasProducidas;
     }
 
-    public void setPiezasProducidas(int piezasProducidas) {
-        this.piezasProducidas = piezasProducidas;
+    public void setPiezasProducidas(Maquina m, char operador) {
+        if (operador == '+') {
+            this.piezasProducidas += m.getPiezas();
+        }
+        else {
+            this.piezasProducidas -= m.getPiezas();
+        }
     }
 
     public int getPuestasFuncionamiento() {
         return puestasFuncionamiento;
     }
 
-    public void setPuestasFuncionamiento(char operacion) {
-        if (operacion == '+') {
+    public void setPuestasFuncionamiento(char operador) {
+        if (operador == '+') {
             this.puestasFuncionamiento++;
         } else {
             this.puestasFuncionamiento--;
@@ -66,6 +71,10 @@ public class Solucion {
     public void setEstados(int estadosGenerados) {
         this.estadosGenerados = estadosGenerados;
     }
+
+    public boolean esFactible(int piezasTotales, Maquina m) {
+        return this.getPiezasProducidas() + m.getPiezas() <= piezasTotales;
+	}
 
     @Override
     public String toString() {
