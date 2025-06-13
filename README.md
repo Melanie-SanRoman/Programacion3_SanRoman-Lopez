@@ -53,7 +53,7 @@ MáquinaN,Piezas
 
 ## Autoras
 
-**Melanie** y **Micaela**  
+**Melanie San Roman** y **Micaela Nicole Lopez**  
 Carrera: Tecnicatura Universitaria en Desarrollo de Aplicaciones Informáticas (TUDAI)  
 Materia: Programación 3  
 Año: 3° año
