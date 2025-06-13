@@ -1,6 +1,6 @@
 # Resolución de Problema de Producción con Máquinas
 
-Este proyecto implementa dos estrategias para resolver un problema de asignación de máquinas a la producción de piezas, utilizando algoritmos de **Backtracking** y **Greedy (Voraz)**.
+Este proyecto implementa dos estrategias para resolver un problema de asignación de máquinas a la producción de piezas, utilizando algoritmos de **Backtracking** y **Greedy**.
 
 ## Descripción del problema
 
@@ -12,20 +12,22 @@ El archivo `config.txt` contiene la configuración inicial, en el siguiente form
 - **Líneas siguientes**: cada una representa una máquina con su ID y cantidad de piezas que puede producir, separadas por coma.
 
 ### Formato esperado:
-
+```
 PiezasTotales
 Máquina1,Piezas
 Máquina2,Piezas
 ...
 MáquinaN,Piezas
+```
 
 ### Ejemplo:
-
+```
 12
 1, 3
 2, 7
 3, 1
 4, 4
+```
 
 ---
 
