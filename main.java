@@ -34,11 +34,15 @@ public class main {
             System.out.println("Error en el formato numérico: " + e.getMessage());
         }
 
-        // Ejecutar el algoritmo
+        // Ejecutar el algoritmo backtracking
         Backtracking backtracking = new Backtracking();
         backtracking.backtracking(maquinas, piezasTotales);
 
+        // Ejecutar el algoritmo greedy
+        Greedy greedy = new Greedy();
+
         // Imprimir la solución encontrada
         System.out.println(backtracking.mejorSolucion.toString());
+        System.out.println(greedy.greedy(maquinas, piezasTotales).toString());
     }
 }
