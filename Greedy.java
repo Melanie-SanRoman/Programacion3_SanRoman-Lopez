@@ -1,24 +1,25 @@
 package tp_especial;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class Greedy {
 
+    private int candidatosConsiderados = 0;
+
     /*
      * Estrategia de resolución por Greedy:
      * 
-     * - Candidatos: todas las máquinas disponibles, cada una con su capacidad de
-     * producción (piezas).
+     * - Candidatos: cada una de las posibles selecciones de máquinas, es decir,
+     * se puede considerar usar una misma máquina múltiples veces mientras sea factible.
      * 
      * - Estrategia de selección: se ordenan las máquinas de forma descendente según
      * la cantidad de piezas que producen.
      * Es decir, se prioriza siempre usar primero la máquina que produce más.
      * 
      * - En cada iteración, se elige la máquina actual (más productiva disponible) y
-     * se la añade a la solución tantas veces
-     * como sea factible sin exceder el total de piezas requeridas.
+     * se la añade a la solución tantas veces como sea factible sin exceder el total 
+     * de piezas requeridas.
      * 
      * - Se continúa evaluando las siguientes máquinas en el orden de mayor a menor
      * producción, hasta alcanzar el total deseado.
@@ -31,20 +32,21 @@ public class Greedy {
      */
 
     public Solucion greedy(List<Maquina> maquinasDisponibles, int piezasTotales) {
-        Solucion solucion = new Solucion("Greedy");
-        Collections.sort(maquinasDisponibles, Comparator.comparingInt(Maquina::getPiezas).reversed());
+        Solucion solucion = new Solucion("Greedy", "Cantidad de candidatos utilizados");
+        Collections.sort(maquinasDisponibles);
 
         if (solucion.getPiezasProducidas() != piezasTotales) {
             for (Maquina m : maquinasDisponibles) {
 
+                // Mientras siga siendo factible seguir usando esta máquina, la agregamos a la solución.
                 while (solucion.esFactible(piezasTotales, m)) {
+                    candidatosConsiderados++;
                     solucion.addMaquina(m);
-                    solucion.setPiezasProducidas(m, '+');
-                    solucion.setPuestasFuncionamiento('+');
                 }
             }
         }
         if (solucion.getPiezasProducidas() == piezasTotales) {
+            solucion.setValorMetrica(candidatosConsiderados);
             return solucion;
         } else {
             return null;

@@ -4,82 +4,75 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Solucion {
-    String metodo;
+    String nombreMetodo;
+    String tipoMetrica;
     List<Maquina> maquinas;
     int piezasProducidas;
     int puestasFuncionamiento;
-    int estadosGenerados;
+    int valorMetrica;
 
-    public Solucion(String metodo) {
-        this.metodo = metodo;
+    public Solucion(String nombreMetodo, String tipoMetrica) {
+        this.nombreMetodo = nombreMetodo;
+        this.tipoMetrica = tipoMetrica;
         this.maquinas = new ArrayList();
         this.piezasProducidas = 0;
         this.puestasFuncionamiento = 0;
     }
 
     public Solucion(Solucion solucionMejor) {
-        this.metodo = solucionMejor.metodo;
+        this.nombreMetodo = solucionMejor.nombreMetodo;
+        this.tipoMetrica = solucionMejor.tipoMetrica;
         this.maquinas = new ArrayList<>(solucionMejor.maquinas);
         this.piezasProducidas = solucionMejor.piezasProducidas;
         this.puestasFuncionamiento = solucionMejor.puestasFuncionamiento;
     }
 
     public void addMaquina(Maquina m) {
-        this.maquinas.add(m);
+        maquinas.add(m);
+        piezasProducidas += m.getPiezas();
+        puestasFuncionamiento++;
     }
 
     public void deleteMaquina() {
-        this.maquinas.remove(maquinas.size() - 1); // elimina la ultima maquina
+        Maquina m = maquinas.remove(maquinas.size() - 1);
+        piezasProducidas -= m.getPiezas();
+        puestasFuncionamiento--;
     }
 
-    public String getMetodo() {
-        return metodo;
+    public boolean esMejor(Solucion mejorSolucion) {
+        if (mejorSolucion.maquinas.size() == 0) return true;
+        return this.maquinas.size() < mejorSolucion.maquinas.size();
+    }
+
+    public String getNombreMetodo() {
+        return nombreMetodo;
     }
 
     public int getPiezasProducidas() {
         return piezasProducidas;
     }
 
-    public void setPiezasProducidas(Maquina m, char operador) {
-        if (operador == '+') {
-            this.piezasProducidas += m.getPiezas();
-        }
-        else {
-            this.piezasProducidas -= m.getPiezas();
-        }
-    }
-
     public int getPuestasFuncionamiento() {
         return puestasFuncionamiento;
     }
 
-    public void setPuestasFuncionamiento(char operador) {
-        if (operador == '+') {
-            this.puestasFuncionamiento++;
-        } else {
-            this.puestasFuncionamiento--;
-        }
+    // Recibe por parametro la candidad de estados generados en caso backtrackin, y de candidatos considerados en caso greedy
+    public void setValorMetrica(int metrica) {
+        this.valorMetrica = metrica;
     }
 
-    public boolean esMejor(Solucion mejorSolucion) {
-        if (mejorSolucion.maquinas.size() == 0) {
-            return true;
-        }
-        return this.maquinas.size() < mejorSolucion.maquinas.size();
-    }
-
-    public void setEstados(int estadosGenerados) {
-        this.estadosGenerados = estadosGenerados;
+    public String getTipoMetrica() {
+        return this.tipoMetrica;
     }
 
     public boolean esFactible(int piezasTotales, Maquina m) {
         return this.getPiezasProducidas() + m.getPiezas() <= piezasTotales;
-	}
+    }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(metodo).append("\n");
+        sb.append(getNombreMetodo()).append("\n");
         sb.append("Solución obtenida: secuencia de máquinas.\n");
         for (Maquina m : maquinas) {
             sb.append("Maquina ID: ").append(m.getId())
@@ -89,7 +82,7 @@ public class Solucion {
                 "Solución obtenida: cantidad de piezas producidas y cantidad de puestas en funcionamiento requeridas.\n");
         sb.append("Piezas producidas: ").append(piezasProducidas).append("\n");
         sb.append("Puestas en funcionamiento: ").append(puestasFuncionamiento).append("\n");
-        sb.append("Cantidad de estados generados: ").append(estadosGenerados).append("\n");
+        sb.append("Metrica: " + this.getTipoMetrica() + ": ").append(this.valorMetrica).append("\n");
         return sb.toString();
     }
 }

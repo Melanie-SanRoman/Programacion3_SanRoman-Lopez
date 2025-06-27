@@ -1,48 +1,30 @@
 package tp_especial;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class main {
 
     public static void main(String[] args) {
-        
-        String rutaArchivo = "tp_especial/config.txt";
-        int piezasTotales = 0;
-        ArrayList<Maquina> maquinas = new ArrayList<>();
+        try {
+            // Cargar configuración desde archivo
+            ConfigLoader.Configuracion config = ConfigLoader.cargarConfiguracion("tp_especial/config.txt");
+            List<Maquina> maquinas = config.getMaquinas();
+            int piezasTotales = config.getPiezasTotales();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
-            String linea = br.readLine();
-            if (linea != null) {
-                piezasTotales = Integer.parseInt(linea.trim());
-            }
+            // Ejecutar algoritmos
+            Backtracking bt = new Backtracking();
+            Solucion solucionBT = bt.backtracking(maquinas, piezasTotales);
 
-            while ((linea = br.readLine()) != null) {
-                if (!linea.trim().isEmpty()) {
-                    String[] partes = linea.split(",");
-                    int id = Integer.parseInt(partes[0].replaceAll("[^0-9]", "")); 
-                    int piezas = Integer.parseInt(partes[1].trim());
-                    maquinas.add(new Maquina(id, piezas));
-                }
-            }
+            Greedy greedy = new Greedy();
+            Solucion solucionGreedy = greedy.greedy(maquinas, piezasTotales);
+
+            // Imprimir resultados
+            Utils.imprimirSolucion(solucionBT);
+            Utils.imprimirSolucion(solucionGreedy);
 
         } catch (IOException e) {
-            System.out.println("Error al leer el archivo: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.out.println("Error en el formato numérico: " + e.getMessage());
+            System.out.println("Error al leer el archivo de configuración: " + e.getMessage());
         }
-
-        // Ejecutar el algoritmo backtracking
-        Backtracking backtracking = new Backtracking();
-        backtracking.backtracking(maquinas, piezasTotales);
-
-        // Ejecutar el algoritmo greedy
-        Greedy greedy = new Greedy();
-
-        // Imprimir la solución encontrada
-        System.out.println(backtracking.mejorSolucion.toString());
-        System.out.println(greedy.greedy(maquinas, piezasTotales).toString());
     }
 }
