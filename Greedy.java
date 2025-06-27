@@ -10,8 +10,9 @@ public class Greedy {
     /*
      * Estrategia de resolución por Greedy:
      * 
-     * - Candidatos: cada una de las posibles selecciones de máquinas, es decir,
-     * se puede considerar usar una misma máquina múltiples veces mientras sea factible.
+     * - Candidatos: todas las máquinas disponibles, cada una con su capacidad de
+     * producción (piezas). Ya que se toma la maquina solo una vez, y esta se agrega hasta que ya no sea factible,
+     * es decir, hasta que su capacidad de produccion supere la cantidad de piezas faltantes. 
      * 
      * - Estrategia de selección: se ordenan las máquinas de forma descendente según
      * la cantidad de piezas que producen.
@@ -37,10 +38,10 @@ public class Greedy {
 
         if (solucion.getPiezasProducidas() != piezasTotales) {
             for (Maquina m : maquinasDisponibles) {
+                candidatosConsiderados++;
 
                 // Mientras siga siendo factible seguir usando esta máquina, la agregamos a la solución.
                 while (solucion.esFactible(piezasTotales, m)) {
-                    candidatosConsiderados++;
                     solucion.addMaquina(m);
                 }
             }
