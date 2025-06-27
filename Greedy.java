@@ -33,7 +33,7 @@ public class Greedy {
      */
 
     public Solucion greedy(List<Maquina> maquinasDisponibles, int piezasTotales) {
-        Solucion solucion = new Solucion("Greedy", "Cantidad de candidatos utilizados");
+        Solucion solucion = new Solucion("Greedy", "Cantidad de candidatos elegidos");
         Collections.sort(maquinasDisponibles);
 
         if (solucion.getPiezasProducidas() != piezasTotales) {
@@ -44,6 +44,9 @@ public class Greedy {
                 while (solucion.esFactible(piezasTotales, m)) {
                     solucion.addMaquina(m);
                 }
+
+                if (solucion.getPiezasProducidas() == piezasTotales)
+                    break;
             }
         }
         if (solucion.getPiezasProducidas() == piezasTotales) {
